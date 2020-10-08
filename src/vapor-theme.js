@@ -89,7 +89,8 @@ const vaporTheme = {
   palette: {
     type: "light",
     primary: {
-      main: "#152935", // YankeesBlue
+      main: "#0090D1",
+      // main: "#152935", // YankeesBlue
       light: "#00C3EA", // CyanProgress
       dark: "#005075" //  DarkImperialBlue
     },
@@ -113,7 +114,7 @@ const vaporTheme = {
       light: "#00AA00" // IslamicGreen
     },
     background: {
-      default: "#F2F5F8", // AzureWhite
+      default: "#E4EBF0",
       paper: "#ffffff" // white
     },
     text: {
@@ -132,6 +133,13 @@ const vaporTheme = {
     MuiTableCell: {
       head: {
         color: "#00C3EA"
+      }
+    },
+    MuiDataGrid: {
+      root: {
+        colCellTitle: {
+          color: "#00C3EA"
+        }
       }
     },
     MuiOutlinedInput: {
