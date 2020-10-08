@@ -1,4 +1,5 @@
 import React from "react";
+import { CreateVaporTheme } from "./vapor-theme";
 import "./styles.css";
 import {
   ThemeProvider,
@@ -49,11 +50,17 @@ import IconButton from "@material-ui/core/IconButton";
 import Alert from "@material-ui/lab/Alert";
 import Divider from "@material-ui/core/Divider";
 import Snackbar from "@material-ui/core/Snackbar";
-const theme = createMuiTheme();
+import { DataGrid } from "@material-ui/data-grid";
+
+const vapor = CreateVaporTheme();
+const theme = createMuiTheme(vapor);
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1
+  },
+  margin: {
+    margin: theme.spacing(1)
   }
 }));
 
@@ -69,6 +76,41 @@ const styles = (theme) => ({
     color: theme.palette.grey[500]
   }
 });
+
+const columns = [
+  { field: "id", headerName: "ID", width: 70 },
+  { field: "firstName", headerName: "First name", width: 130 },
+  { field: "lastName", headerName: "Last name", width: 130 },
+  {
+    field: "age",
+    headerName: "Age",
+    type: "number",
+    width: 90
+  },
+  {
+    field: "fullName",
+    headerName: "Full name",
+    description: "This column has a value getter and is not sortable.",
+    sortable: false,
+    width: 160,
+    valueGetter: (params) =>
+      `${params.getValue("firstName") || ""} ${
+        params.getValue("lastName") || ""
+      }`
+  }
+];
+
+const rows = [
+  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
+  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
+  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
+  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
+  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
+  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
+  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
+  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
+  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 }
+];
 
 const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
@@ -106,6 +148,12 @@ export default function App() {
   const [value, setValue] = React.useState("female");
   const [valueTab, setValueTab] = React.useState(0);
   const [open, setOpen] = React.useState(false);
+
+  const [checked, setChecked] = React.useState(true);
+
+  const handleChangeCheckBox = (event) => {
+    setChecked(event.target.checked);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -165,35 +213,127 @@ export default function App() {
           <Grid container spacing={3} direction="column">
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Grid item xs={12} container>
-                  <Grid item xs={12}>
+                <Grid item xs={12} container spacing={2}>
+                  <Grid item xs={12} className={classes.margin}>
                     <Typography variant="h1">This is an H1</Typography>
                     <Typography variant="h2">This is an H2</Typography>
+                    <Typography variant="h3">This is an H3</Typography>
+                    <Typography variant="h4">This is an H4</Typography>
+                    <Typography variant="h5">This is an H5</Typography>
+                    <Typography variant="subtitle1">
+                      Responsive Subtitle1
+                    </Typography>
+                    <Typography variant="subtitle2">
+                      Responsive Subtitle2
+                    </Typography>
+                    <Typography variant="caption">Descriptive</Typography>
+                    <Typography variant="body1">Body1 - Large</Typography>
+                    <Typography variant="body2">Body2 - Regular</Typography>
                   </Grid>
                 </Grid>
                 <Grid item xs={12} container>
                   <Grid item xs={12}>
-                    <Button variant="contained">Default</Button>
-                    <Button variant="contained" color="primary">
-                      Primary
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      className={classes.margin}
+                    >
+                      primary
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="medium"
+                      className={classes.margin}
+                    >
+                      primary
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      className={classes.margin}
+                    >
+                      primary
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      className={classes.margin}
+                      disabled
+                    >
+                      disabled primary
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      size="small"
+                      className={classes.margin}
+                    >
+                      primary
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      size="medium"
+                      className={classes.margin}
+                    >
+                      primary
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      size="large"
+                      className={classes.margin}
+                    >
+                      primary
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      size="large"
+                      className={classes.margin}
+                      disabled
+                    >
+                      disabled primary
                     </Button>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} container>
+                <Grid item xs={12} container className={classes.margin}>
                   <Grid item xs={12}>
                     <Checkbox
+                      checked={checked}
+                      color="primary"
+                      onChange={handleChangeCheckBox}
+                      inputProps={{ "aria-label": "secondary checkbox" }}
+                    />
+                    <Checkbox
+                      checked={checked}
+                      color="primary"
+                      disabled
+                      onChange={handleChangeCheckBox}
+                      inputProps={{ "aria-label": "secondary checkbox" }}
+                    />
+                    <Checkbox
                       checked={false}
-                      onChange={null}
-                      inputProps={{ "aria-label": "primary checkbox" }}
+                      color="primary"
+                      disabled
+                      onChange={handleChangeCheckBox}
+                      inputProps={{ "aria-label": "secondary checkbox" }}
                     />
                     <Checkbox
                       checked={true}
-                      onChange={null}
-                      inputProps={{ "aria-label": "primary checkbox" }}
+                      onChange={handleChangeCheckBox}
+                      name="checkedF"
+                      indeterminate
                     />
                   </Grid>
                 </Grid>
-                <Grid item xs={12} container>
+                <Grid item xs={12} container className={classes.margin}>
                   <Grid item xs={12}>
                     <Fab color="primary" aria-label="add">
                       <AddIcon />
@@ -231,20 +371,24 @@ export default function App() {
                           value="female"
                           control={<Radio />}
                           label="Female"
+                          color="primary"
                         />
                         <FormControlLabel
                           value="male"
                           control={<Radio />}
                           label="Male"
+                          color="primary"
                         />
                         <FormControlLabel
                           value="other"
                           control={<Radio />}
                           label="Other"
+                          color="primary"
                         />
                         <FormControlLabel
                           value="disabled"
                           disabled
+                          color="primary"
                           control={<Radio />}
                           label="(Disabled option)"
                         />
@@ -319,6 +463,7 @@ export default function App() {
                   </Grid>
                 </Grid>
                 <Grid item xs={12} container>
+                  {/* Breadcrumbs */}
                   <Grid item xs={12}>
                     <Breadcrumbs
                       separator={<NavigateNextIcon fontSize="small" />}
@@ -361,7 +506,7 @@ export default function App() {
                 </Grid>
                 <Grid item xs={12} container>
                   <Paper className={classes.root}>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} className={classes.margin}>
                       <Tabs
                         value={valueTab}
                         onChange={handleChangeTab}
@@ -378,7 +523,7 @@ export default function App() {
                   </Paper>
                 </Grid>
                 <Grid item xs={12} container>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} className={classes.margin}>
                     <Alert variant="outlined" severity="error">
                       This is an error alert — check it out!
                     </Alert>
@@ -393,7 +538,7 @@ export default function App() {
                     </Alert>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} container>
+                <Grid item xs={12} container className={classes.margin}>
                   <Grid item xs={12}>
                     <Button
                       variant="outlined"
@@ -440,9 +585,14 @@ export default function App() {
                     </Dialog>
                   </Grid>
                 </Grid>
-                <Grid item xs={12} container>
+                <Grid item xs={12} container className={classes.margin}>
                   <Grid item xs={12}>
-                    {/* Stuff */}
+                    <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      pageSize={5}
+                      checkboxSelection
+                    />
                   </Grid>
                 </Grid>
                 <Grid item xs={12} container>
